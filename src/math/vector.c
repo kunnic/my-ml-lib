@@ -3,7 +3,7 @@
 #include <string.h>
 #include "ml_math.h"
 
-Vector* create_vector(int size) {
+Vector* vector_create(int size) {
 	// Initialize a vector type Vector, return NULL if fails
 	
 	// Cannot allocate a vector of size 0 or lower
@@ -19,14 +19,14 @@ Vector* create_vector(int size) {
 	vector->data = calloc(size, sizeof(double));
 	if (vector->data == NULL) {
 		free(vector);
-		return NULL
+		return NULL;
 	}
 	vector->size = size;
 
 	return vector;
 }
 
-Vector* create_vector_from(const double* values, int size) {
+Vector* vector_create_from(const double* values, int size) {
 	if (size <= 0 || values == NULL) {return NULL;}
 
 	Vector* vector = malloc(sizeof(Vector));
@@ -44,7 +44,7 @@ Vector* create_vector_from(const double* values, int size) {
 	return vector;
 }
 
-void free_vector(Vector* vector) {
+void vector_free(Vector* vector) {
 	// Scenario:
 	// 	- vector have data
 	// 	- vector have null
@@ -57,7 +57,7 @@ void free_vector(Vector* vector) {
 	free(vector);
 }
 
-void print_vector(const Vector* vector) {
+void vector_print(const Vector* vector) {
 	if (vector == NULL) {return;}
 	if (vector->data == NULL) {
 		printf("Vector size %d with no values", vector->size);
@@ -69,4 +69,84 @@ void print_vector(const Vector* vector) {
 		//printf("%d,", *(vector->data + i));
 		printf("%.4f,", vector->data[i]);
 	}
+}
+
+Vector* vector_add(const Vector* a, const Vector* b) {
+	if (
+		a == NULL ||
+		b == NULL ||
+		a->data == NULL ||
+		b->data == NULL
+	) {return NULL;}
+
+	if (a->size <=0 || a->size != b->size) {return NULL;}
+	
+	Vector *vector = vector_create(a->size);
+	if (vector == NULL) {
+		return NULL;
+	}
+
+	int i;
+	for (i = 0; i < a->size; i++) {
+		vector->data[i] = a->data[i] + b->data[i];
+	}
+
+	return vector;
+}
+
+Vector* vector_sub(const Vector* a, const Vector* b) {
+	if (
+		a == NULL ||
+		b == NULL ||
+		a->data == NULL ||
+		b->data == NULL
+	) {return NULL;}
+
+	if (a->size <=0 || a->size != b->size) {return NULL;}
+	
+	Vector *vector = vector_create(a->size);
+	if (vector == NULL) {
+		return NULL;
+	}
+
+	int i;
+	for (i = 0; i < a->size; i++) {
+		vector->data[i] = a->data[i] - b->data[i];
+	}
+
+	return vector;
+}
+
+Vector* vector_scale(Vector* vector, double scalar) {
+	if (
+		vector == NULL ||
+		vector->size <= 0 ||
+		vector->data == NULL
+	) {return NULL;}
+
+	int i;
+	for (i = 0; i < vector->size; i++) {
+		vector->data[i] *= scalar;
+	}
+
+	return vector;
+}
+
+double vector_dot(const Vector* a, const Vector* b) {
+	if (
+		a == NULL ||
+		b == NULL ||
+		a->data == NULL ||
+		b->data == NULL
+	) {return 0.0;}
+
+	if (a->size <=0 || a->size != b->size) {return 0.0;}
+	
+	int i;
+	double sum = 0.0;
+	for (i = 0; i < a->size; i++) {
+		sum += a->data[i] * b->data[i];
+	}
+
+	return sum;
 }

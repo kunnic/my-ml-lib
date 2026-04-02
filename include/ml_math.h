@@ -6,12 +6,15 @@ typedef struct {
 	int size;
 } Vector;
 
-Vector* create_vector(int size);
+// Vector init
+Vector* vector_create(int size);
+Vector* vector_create_from(const double *values, int size);
+void 	vector_free(Vector *vector);
+void 	vector_print(const Vector *vector);
 
-Vector* create_vector_from(const double *values, int size);
-
-void 	free_vector(Vector *vector);
-
-void 	print_vector(const Vector *vector);
-
+// Vector aritmethic
+Vector* vector_add(const Vector* a, const Vector* b);
+Vector* vector_sub(const Vector* a, const Vector* b);
+Vector*	vector_scale(Vector* vector, double scalar);
+double vector_dot(const Vector* a, const Vector* b);
 #endif
