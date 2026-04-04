@@ -17,4 +17,7 @@ Vector* vector_add(const Vector* a, const Vector* b);
 Vector* vector_sub(const Vector* a, const Vector* b);
 Vector*	vector_scale(Vector* vector, double scalar);
 double vector_dot(const Vector* a, const Vector* b);
+double vector_norm(const Vector* vector);
+double vector_L2(const Vector* a, const Vector* b);
+double vector_normalize(const Vector* vector);
 #endif

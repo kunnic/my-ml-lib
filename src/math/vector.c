@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include "ml_math.h"
 
 Vector* vector_create(int size) {
@@ -149,4 +150,34 @@ double vector_dot(const Vector* a, const Vector* b) {
 	}
 
 	return sum;
+}
+
+double vector_norm(const Vector* vector) {
+	return sqrt(vector_dot(vector, vector));
+}
+
+double vector_L2(const Vector* a, const Vector* b) {
+	return sqrt(
+		vector_dot(a, a) + vector_dot(b, b) - 2 * vector_dot(a, b)
+	);
+}
+
+double vector_normalize(const Vector* vector) {
+	if (vector == NULL) {return NULL;}
+
+	double norm = vector_norm(vector);
+
+	if (norm < 1e-12) {return NULL;}
+
+	Vector* vector_result = vector_create(vector->size);
+	if (vector_result == NULL) {
+		return NULL;
+	}
+
+	int i;
+	for (i = 0; i < vector_result->size; i++) {
+		vector_result->data[i] = vector->data[i] / norm; 
+	}
+
+	return vector_result;
 }
