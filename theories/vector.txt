@@ -1,0 +1,12 @@
+=======
+VECTORS
+=======
+1.  What is a vector?
+    A vector is an object that can be added together and multiplied by scalars to produce another ofject of the same kind.
+    Example:
+    - Geometric vectors
+    - Polynomials
+    - Audio signals
+    - Elements of Rn
+
+=======

@@ -162,7 +162,7 @@ double vector_L2(const Vector* a, const Vector* b) {
 	);
 }
 
-double vector_normalize(const Vector* vector) {
+Vector* vector_normalize(const Vector* vector) {
 	if (vector == NULL) {return NULL;}
 
 	double norm = vector_norm(vector);
@@ -175,8 +175,10 @@ double vector_normalize(const Vector* vector) {
 	}
 
 	int i;
+	double inv_norm = 1.0 / norm;
+
 	for (i = 0; i < vector_result->size; i++) {
-		vector_result->data[i] = vector->data[i] / norm; 
+		vector_result->data[i] = vector->data[i] * inv_norm; 
 	}
 
 	return vector_result;

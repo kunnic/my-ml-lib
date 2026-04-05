@@ -38,7 +38,32 @@ int main(void) {
 	// --- vector_free: NULL safety ---
 	printf("=== vector_free ===\n");
 	vector_free(NULL); // should not crash
-	printf("vector_free(NULL) OK\n");
+	printf("vector_free(NULL) OK\n\n");
+
+	// --- vector_dot ---
+	printf("=== vector_dot ===\n");
+	printf("[1,2,3]·[4,5,6] = %.4f  (expect 32.0000)\n", vector_dot(a, b));
+	double perp_x[] = {1.0, 0.0};
+	double perp_y[] = {0.0, 1.0};
+	Vector *vx = vector_create_from(perp_x, 2);
+	Vector *vy = vector_create_from(perp_y, 2);
+	printf("[1,0]·[0,1]     = %.4f  (expect 0.0000, perpendicular)\n\n", vector_dot(vx, vy));
+
+	// --- vector_norm ---
+	printf("=== vector_norm ===\n");
+	double vals_34[] = {3.0, 4.0};
+	Vector *v34 = vector_create_from(vals_34, 2);
+	printf("norm([3,4]) = %.4f  (expect 5.0000)\n\n", vector_norm(v34));
+
+	// --- vector_L2 ---
+	printf("=== vector_L2 (Euclidean distance) ===\n");
+	printf("L2([1,2,3], [4,5,6]) = %.4f\n\n", vector_L2(a, b));
+
+	// --- vector_normalize ---
+	printf("=== vector_normalize ===\n");
+	Vector *v_unit = vector_normalize(v34);
+	printf("normalize([3,4]) = "); vector_print(v_unit); printf("]\n");
+	printf("norm of result   = %.4f  (expect 1.0000)\n\n", vector_norm(v_unit));
 
 	// --- cleanup ---
 	vector_free(v_zeros);
@@ -47,7 +72,11 @@ int main(void) {
 	vector_free(add_result);
 	vector_free(sub_result);
 	vector_free(c);
+	vector_free(vx);
+	vector_free(vy);
+	vector_free(v34);
+	vector_free(v_unit);
 
-	printf("\nDone.\n");
+	printf("Done.\n");
 	return 0;
 }
